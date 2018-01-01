@@ -1,5 +1,6 @@
 package de.diedavids.axonpolicyexample.domain
 
+
 import de.diedavids.axonpolicyexample.commands.CancelPolicyCommand
 import de.diedavids.axonpolicyexample.commands.CreatePolicyCommand
 import de.diedavids.axonpolicyexample.events.PolicyCancelledEvent
@@ -12,48 +13,59 @@ import org.axonframework.spring.stereotype.Aggregate
 
 import java.time.LocalDate
 
+/**
+ * The policy (POJO) is the DDD Aggregate
+ *
+ * Additionally to the attributes, CommandHandler & EventHandler are registered here
+ */
 @Aggregate
 class Policy implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L
 
     @AggregateIdentifier
-    String id;
+    String id
 
-    LocalDate coverStartDate;
+    String coverStartDate
 
-    LocalDate coverEndDate = null;
+    String coverEndDate = null
 
-    PolicyState state;
+    PolicyState state
 
-    int apartmentSize;
+    int apartmentSize
 
-    @CommandHandler
-    Policy(CreatePolicyCommand command) {
-        AggregateLifecycle.apply(new PolicyCreatedEvent(id: command.id));
-    }
 
     Policy() {}
 
-    @EventSourcingHandler
-    protected void on(PolicyCreatedEvent event) {
-        this.id = event.id;
+    @CommandHandler
+    Policy(CreatePolicyCommand command) {
+        AggregateLifecycle.apply(new PolicyCreatedEvent(id: command.id))
     }
+
 
     @CommandHandler
     protected void on(CancelPolicyCommand command) {
-        markCancelled()
-
-        AggregateLifecycle.apply(new PolicyCancelledEvent(id: id));
+        AggregateLifecycle.apply(new PolicyCancelledEvent(id: id, cancelDate: command.cancelDate))
     }
 
-    private void markCancelled() {
-        state = PolicyState.CANCELED
+
+    @EventSourcingHandler
+    protected void on(PolicyCreatedEvent event) {
+        this.id = event.id
+        this.state = PolicyState.ACTIVE
+        this.coverStartDate = LocalDate.now().toString()
+        this.coverEndDate = LocalDate.now().plusYears(1).toString()
     }
 
     @EventSourcingHandler
     protected void on(PolicyCancelledEvent event) {
         markCancelled()
+        this.coverEndDate = event.cancelDate
+    }
+
+
+    private void markCancelled() {
+        state = PolicyState.CANCELED
     }
 
 }

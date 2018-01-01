@@ -10,3 +10,11 @@ class PolicyCommand implements Serializable {
     String id
 
 }
+class PolicyMtaCommand extends PolicyCommand {}
+class CreatePolicyCommand extends PolicyCommand {}
+
+class CancelPolicyCommand extends PolicyCommand {
+
+    String cancelDate
+
+}

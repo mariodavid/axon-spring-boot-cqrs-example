@@ -35,7 +35,8 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
-	compile 'org.axonframework:axon-spring-boot-starter:3.0.4'
+	compile 'org.axonframework:axon-spring-boot-starter:3.1.1'
+
 	// Groovy
 	compile 'org.codehaus.groovy:groovy-all:2.4.7'
 
