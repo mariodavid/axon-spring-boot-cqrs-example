@@ -1,6 +1,6 @@
 ## Spring Boot Axon Example - Policy
 
-This example uses [Axon](axonframework.org) together with Spring Boot to create
+This example uses [Axon](http://www.axonframework.org/) together with Spring Boot to create
 an API for creating, updating and cancelling policies.
 
 It uses the CQRS architecture pattern as well as event sourcing to store the whole
