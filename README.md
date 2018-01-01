@@ -21,13 +21,11 @@ Content-Type: text/plain;charset=UTF-8
 
 85835917-7476-42fd-b759-485eeed48751
 
-
 ````
 
 #### Cancel a policy
 ````
 $ http POST localhost:8080/policies/85835917-7476-42fd-b759-485eeed48751/cancellation cancelDate=2018-05-01
-
 ````
 
 #### Retrieving a policy in its latest state
